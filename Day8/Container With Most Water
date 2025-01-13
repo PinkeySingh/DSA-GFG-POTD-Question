@@ -1,0 +1,15 @@
+class Solution {
+
+    public int maxWater(int arr[]) {
+        // Code Here
+        int n = arr.length;
+        int s=0, e=n-1 , max_area=0 , area=0;
+        while(s<e){
+            area=Math.min(arr[s],arr[e])* (e-s);
+            max_area = Math.max(max_area , area);
+            if(arr[s]<arr[e])s++;
+            else e--;
+        }
+        return max_area;
+    }
+}
