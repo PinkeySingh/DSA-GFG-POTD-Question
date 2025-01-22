@@ -1,0 +1,58 @@
+/* node for linked list
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int d) {
+        data = d;
+        next = null;
+    }
+}
+
+*/
+
+class Solution {
+
+    // Function to reverse a linked list
+    static Node rev(Node head) {
+        Node curr = head;
+        Node prev = null;
+
+        while (curr != null) {
+            Node next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+
+
+    static Node addTwoLists(Node num1, Node num2) {
+        Node l1 = rev(num1);
+        Node l2 = rev(num2);
+        Node curr = null;
+        int carry = 0;
+        while(l1!=null || l2!=null || carry >0){
+            int v1 = l1!=null ? l1.data : 0;
+            int v2 = l2!=null ? l2.data : 0;
+            int sum = v1+v2+carry;
+            carry = sum/10;
+            Node tmp = new Node(sum%10);
+            tmp.next = curr;
+            curr = tmp;
+            if(l1!=null){
+                l1=l1.next;
+            }
+            if(l2!=null){
+                l2=l2.next;
+            }
+        }
+        while(curr!=null && curr.data == 0){
+            curr=curr.next;
+        }
+        return curr;
+    }
+}
