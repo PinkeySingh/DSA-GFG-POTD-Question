@@ -1,0 +1,50 @@
+/*linked list node
+class Node {
+    int data;
+    Node next;
+    Node random;
+
+    Node(int x) {
+        data = x;
+        next = null;
+        random = null;
+    }
+}
+*/
+class Solution {
+    public Node cloneLinkedList(Node head) {
+        // code here
+        if (head == null) return null;
+
+        Node temp = head;
+        while (temp != null) {
+            Node newNode = new Node(temp.data);
+            newNode.next = temp.next;
+            temp.next = newNode;
+            temp = newNode.next;
+        }
+
+        temp = head;
+        while (temp != null) {
+            if (temp.random != null) {
+                temp.next.random = temp.random.next;
+            } else {
+                temp.next.random = null;
+            }
+            temp = temp.next.next;
+        }
+
+        temp = head;
+        Node head2 = head.next;
+        while (temp != null) {
+            Node clonedNode = temp.next;
+            temp.next = clonedNode.next;
+            if (clonedNode.next != null) {
+                clonedNode.next = clonedNode.next.next;
+            }
+            temp = temp.next;
+        }
+
+        return head2;
+    }
+}
