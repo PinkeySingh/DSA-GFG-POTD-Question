@@ -1,0 +1,87 @@
+// User function Template for Java
+
+class Solution {
+    
+     static boolean isSafe(char[][] board , int row , int col , int n){
+        // row check
+        for(int i = 0 ; i< n ; i++){
+            if(board[row][i] == 'x') return false;
+        }
+        
+        // col check
+        for(int i = 0 ; i< n ; i++){
+            if(board[i][col] == 'x') return false;
+        }
+        
+        // north-east
+        int i = row;
+        int j = col;
+        while(i>=0 && j<n){
+            if(board[i][j] == 'x') return false;
+            j++;
+            i--;
+        }
+        //north-west
+         i = row;
+         j = col;
+        while(i>=0 && j>=0){
+            if(board[i][j] == 'x') return false;
+            j--;
+            i--;
+        }
+        //south-east
+         i = row;
+         j = col;
+        while(i<n && j<n){
+            if(board[i][j] == 'x') return false;
+            j++;
+            i++;
+        }
+        //south-west
+         i = row;
+         j = col;
+        while(i<n && j>=0){
+            if(board[i][j] == 'x') return false;
+            j--;
+            i++;
+        }
+        return true;
+    }
+    static void queens(char[][] board , int row , int n ,  ArrayList<ArrayList<Integer>> ar){
+        // int cols = 0;
+           
+        if(row == n){
+             ArrayList<Integer> a = new ArrayList<>();
+            for(int i = 0; i< n ; i++){
+                for(int j = 0 ; j< n ; j++){
+                    if(board[i][j] == 'x'){
+                        a.add(j+1);
+                    }
+                }
+            }
+            ar.add(a);
+            return;
+        }
+        for(int j = 0 ; j<n ; j++){
+            if(isSafe(board , row , j , n)){
+                board[row][j] = 'x';
+                // cols++;
+                // a.add(j+1);
+                queens(board , row+1 , n , ar);
+                board[row][j] = '.';
+            }
+        }
+    }
+    public ArrayList<ArrayList<Integer>> nQueen(int n) {
+        // code here
+        ArrayList<ArrayList<Integer>> ar = new ArrayList<>();
+        char[][] board = new char[n][n];
+        for(int i = 0; i< n;i++){
+            for(int j = 0 ; j< n ; j++){
+                board[i][j] = '.';
+            }
+        }
+        queens(board , 0 , n , ar);
+        return ar;
+    }
+}
