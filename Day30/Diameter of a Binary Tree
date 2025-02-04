@@ -1,0 +1,33 @@
+/*
+class Node {
+    int data;
+    Node left;
+    Node right;
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+*/
+
+class Solution {
+    
+    int height(Node root , int[] ans ) {
+        // code here
+        //base case
+        if(root== null) return 0;
+        
+        //recrusive case
+        int leftH = height(root.left , ans);
+        int rightH = height(root.right , ans);
+        ans[0] = Math.max(leftH+rightH , ans[0]);
+        return Math.max(leftH , rightH)+1;
+    }
+    int diameter(Node root) {
+        // Your code here
+        int[] ans= new int[1];
+        height(root , ans);
+        return ans[0];
+    }
+}
