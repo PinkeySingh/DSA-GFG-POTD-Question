@@ -1,0 +1,71 @@
+// User function Template for Java
+/*
+class Node
+{
+    int data;
+    Node left, right;
+
+    public Node(int d)
+    {
+        data = d;
+        left = right = null;
+    }
+}
+*/
+
+class Solution {
+    
+   void leftborder(Node node, ArrayList<Integer> res) {
+        if (node == null || (node.left == null && node.right == null)) return;
+
+        res.add(node.data);
+
+        if (node.left != null) {
+            leftborder(node.left, res);
+        } else {
+            leftborder(node.right, res);
+        }
+    }
+    
+    void Bottomborder(Node node, ArrayList<Integer> res) {
+        if (node == null) return;
+
+        Bottomborder(node.left, res);
+
+        if (node.left == null && node.right == null) {
+            res.add(node.data);
+        }
+
+        Bottomborder(node.right, res);
+    }
+    
+     void rightborder(Node node, ArrayList<Integer> res) {
+        if (node == null || (node.left == null && node.right == null)) return;
+
+        if (node.right != null) {
+            rightborder(node.right, res);
+        } else {
+            rightborder(node.left, res);
+        }
+
+        res.add(node.data); 
+    }
+    
+    ArrayList<Integer> boundaryTraversal(Node node) {
+        // code here
+        ArrayList<Integer> res = new ArrayList<>();
+
+        if (node == null) return res;
+
+        res.add(node.data); 
+        leftborder(node.left, res);
+        Bottomborder(node.left, res);
+        Bottomborder(node.right, res);
+
+        ArrayList<Integer> rightRes = new ArrayList<>();
+        rightborder(node.right, rightRes);
+        res.addAll(rightRes); 
+
+        return res;
+    }
+}
