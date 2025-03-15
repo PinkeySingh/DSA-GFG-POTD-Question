@@ -1,0 +1,29 @@
+class Solution {
+    
+    private int helper(int ind, int sum, int[] coins, int[][] dp) {
+        if (sum == 0) return 0;
+        if (ind == coins.length) return (int) 1e9;
+        
+        if (dp[ind][sum] != -1) return dp[ind][sum];
+        
+        int take = (int) 1e9, notTake = (int) 1e9;
+        if (coins[ind] <= sum) take = 1 + helper(ind, sum - coins[ind], coins, dp);
+        notTake = helper(ind + 1, sum, coins, dp);
+        
+        return dp[ind][sum] = Math.min(take, notTake);
+    }
+
+
+    public int minCoins(int coins[], int sum) {
+        int n = coins.length;
+        int[][] dp = new int[n][sum + 1];
+        
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        
+        int ans = helper(0, sum, coins, dp);
+        
+        return (ans == (int) 1e9) ? -1 : ans;
+    }
+}
