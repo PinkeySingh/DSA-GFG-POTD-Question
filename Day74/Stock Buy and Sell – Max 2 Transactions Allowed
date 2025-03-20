@@ -1,0 +1,38 @@
+class Solution {
+    
+    private static int helper(int ind, int mode, int k, int[] prices, int[][][] dp) {
+        if (ind == prices.length) return 0;
+        if (k == 0) return 0;
+        if (dp[ind][k][mode] != -1) return dp[ind][k][mode];
+        
+        if (mode == 0) {
+            
+            dp[ind][k][mode] = Math.max(helper(ind + 1, 1, k, prices, dp) - prices[ind],
+                                        helper(ind + 1, 0, k, prices, dp));
+        } else {
+            
+            dp[ind][k][mode] = Math.max(helper(ind + 1, 0, k - 1, prices, dp) + prices[ind],
+                                        helper(ind + 1, 1, k, prices, dp));
+        }
+        
+        return dp[ind][k][mode];
+    }
+    
+    public static int maxProfitK(int[] prices, int k) {
+        int n = prices.length;
+        int[][][] dp = new int[n][k + 1][2];
+        
+        for (int[][] matrix : dp) {
+            for (int[] row : matrix) {
+                Arrays.fill(row, -1);
+            }
+        }
+        
+        return helper(0, 0, k, prices, dp);
+    }
+    
+    public static int maxProfit(int[] prices) {
+        // code here
+        return maxProfitK(prices, 2);
+    }
+}
