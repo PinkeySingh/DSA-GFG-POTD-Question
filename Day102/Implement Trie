@@ -1,0 +1,50 @@
+class Trie {
+    
+    boolean end;
+    Trie[] children;
+
+    // Constructor
+    public Trie() {
+        end = false;
+        children = new Trie[26];
+    }
+
+    // Insert a word into the Trie
+    public void insert(String word) {
+        Trie root = this;
+        for (char ch : word.toCharArray()) {
+            int idx = ch - 'a';
+            if (root.children[idx] == null) {
+                root.children[idx] = new Trie();
+            }
+            root = root.children[idx];
+        }
+        root.end = true;
+    }
+
+    // Search a word in the Trie
+    public boolean search(String word) {
+        Trie root = this;
+        for (char ch : word.toCharArray()) {
+            int idx = ch - 'a';
+            if (root.children[idx] == null) {
+                return false;
+            }
+            root = root.children[idx];
+        }
+        return root.end;
+    }
+
+    // Check if a prefix exists in the Trie
+    public boolean isPrefix(String prefix) {
+        Trie root = this;
+        for (char ch : prefix.toCharArray()) {
+            int idx = ch - 'a';
+            if (root.children[idx] == null) {
+                return false;
+            }
+            root = root.children[idx];
+        }
+        return true;
+    }
+}
