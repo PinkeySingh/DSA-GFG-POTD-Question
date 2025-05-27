@@ -1,0 +1,29 @@
+class Solution {
+    
+        private void findLeaves(int[] preorder, ArrayList<Integer> result, int min, int max) {
+        if (idx >= preorder.length) return;
+
+        int val = preorder[idx];
+
+        if (val < min || val > max) return;
+
+        idx++;
+        int currIdx = idx;
+
+        findLeaves(preorder, result, min, val - 1);
+
+        findLeaves(preorder, result, val + 1, max);
+
+        if (idx == currIdx)
+            result.add(val);
+        }
+        
+        int idx = 0;
+
+    public ArrayList<Integer> leafNodes(int[] preorder) {
+        // code here
+        ArrayList<Integer> result = new ArrayList<>();
+        findLeaves(preorder, result, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        return result;
+    }
+}
