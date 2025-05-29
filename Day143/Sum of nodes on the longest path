@@ -1,0 +1,40 @@
+/*
+class Node {
+    int data;
+    Node left, right;
+
+    public Node(int data){
+        this.data = data;
+    }
+} */
+class Solution {
+    
+     private void dfs(Node node, int currLen, int currSum) {
+        if (node == null) return;
+
+        currSum += node.data;
+        currLen++;
+
+        if (node.left == null && node.right == null) {
+            if (currLen > maxLen) {
+                maxLen = currLen;
+                maxSum = currSum;
+            } else if (currLen == maxLen) {
+                maxSum = Math.max(maxSum, currSum);
+            }
+        }
+
+        dfs(node.left, currLen, currSum);
+        dfs(node.right, currLen, currSum);
+    }
+    
+    private int maxLen = 0;
+    private int maxSum = 0;
+    
+    public int sumOfLongRootToLeafPath(Node root) {
+        // code here
+        dfs(root, 0, 0);
+        return maxSum;
+     
+    }
+}
