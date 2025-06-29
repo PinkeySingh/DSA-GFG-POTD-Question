@@ -1,0 +1,44 @@
+class Solution {
+    
+     private boolean isPossible(int[] arr, int k, int maxAllowedSum) {
+        int count = 1; 
+        int currentSum = 0;
+
+        for (int num : arr) {
+            if (currentSum + num > maxAllowedSum) {
+                count++;             
+                currentSum = num;
+                if (count > k) return false;
+            } else {
+                currentSum += num;
+            }
+        }
+
+        return true;
+    }
+    
+    public int splitArray(int[] arr, int k) {
+        // code here
+        int low = 0, high = 0;
+        
+        for (int num : arr) {
+            low = Math.max(low, num);  
+            high += num;              
+        }
+
+        int result = high;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (isPossible(arr, k, mid)) {
+                result = mid;       
+                high = mid - 1;     
+            } else {
+                low = mid + 1;       
+            }
+        }
+
+        return result;
+    }
+};
