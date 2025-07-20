@@ -1,0 +1,35 @@
+class Solution {
+     
+    
+    public int countValid(int n, int[] arr) {
+         Set<Integer> goodSet = new HashSet<>();
+        for (int d : arr) goodSet.add(d);
+
+        int total = 9 * (int)Math.pow(10, n - 1);
+
+        List<Integer> badDigits = new ArrayList<>();
+        for (int i = 0; i <= 9; i++) {
+            if (!goodSet.contains(i)) {
+                badDigits.add(i);
+            }
+        }
+
+        if (badDigits.size() == 0) return total;
+
+        int invalid = 0;
+
+        int badSize = badDigits.size();
+        if (badSize == 0) return total; 
+
+        int leadCount = 0;
+        for (int d : badDigits) {
+            if (d != 0) leadCount++;
+        }
+
+        if (leadCount == 0) return total; 
+
+        invalid = leadCount * (int)Math.pow(badSize, n - 1);
+
+        return total - invalid;
+    }
+}
