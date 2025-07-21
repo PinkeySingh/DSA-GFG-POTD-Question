@@ -1,0 +1,54 @@
+class Solution {
+    static final int MAX = 10001;
+
+    private int[] mobiusSieve() {
+        int[] mobius = new int[MAX];
+        Arrays.fill(mobius, 1);
+
+        boolean[] isPrime = new boolean[MAX];
+        Arrays.fill(isPrime, true);
+
+        for (int i = 2; i < MAX; i++) {
+            if (isPrime[i]) {
+                for (int j = i; j < MAX; j += i) {
+                    mobius[j] *= -1;
+                    isPrime[j] = false;
+                }
+                int square = i * i;
+                for (int j = square; j < MAX; j += square) {
+                    mobius[j] = 0;
+                }
+            }
+        }
+
+        return mobius;
+    }
+
+    public int cntCoprime(int[] arr) {
+        int[] freq = new int[MAX];
+
+        for (int num : arr) {
+            freq[num]++;
+        }
+
+        int[] countDivisible = new int[MAX];
+        for (int g = 1; g < MAX; g++) {
+            for (int mult = g; mult < MAX; mult += g) {
+                countDivisible[g] += freq[mult];
+            }
+        }
+
+        int[] mobius = mobiusSieve();
+
+        long coprimePairs = 0;
+        for (int g = 1; g < MAX; g++) {
+            if (mobius[g] != 0) {
+                long cnt = countDivisible[g];
+                long pairs = cnt * (cnt - 1) / 2; 
+                coprimePairs += mobius[g] * pairs;
+            }
+        }
+
+        return (int) coprimePairs;
+    }
+}
