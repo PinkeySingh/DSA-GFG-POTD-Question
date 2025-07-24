@@ -1,0 +1,18 @@
+class Solution {
+    public int getLastMoment(int n, int left[], int right[]) {
+        // code here
+        int maxTime = 0;
+
+        // Check time for ants moving left (they fall off at their position)
+        for (int pos : left) {
+            maxTime = Math.max(maxTime, pos);
+        }
+
+        // Check time for ants moving right (they fall off at n - position)
+        for (int pos : right) {
+            maxTime = Math.max(maxTime, n - pos);
+        }
+
+        return maxTime;
+    }
+}
