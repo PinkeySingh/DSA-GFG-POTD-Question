@@ -1,0 +1,34 @@
+class Solution {
+    public int countBalanced(String[] arr) {
+        // code here
+       int n = arr.length;
+        int[] vowelPrefix = new int[n + 1];
+        int[] consonantPrefix = new int[n + 1];
+
+        for (int i = 0; i < n; i++) {
+            int vowels = 0, consonants = 0;
+            for (char ch : arr[i].toCharArray()) {
+                if (isVowel(ch)) vowels++;
+                else consonants++;
+            }
+            vowelPrefix[i + 1] = vowelPrefix[i] + vowels;
+            consonantPrefix[i + 1] = consonantPrefix[i] + consonants;
+        }
+
+        Map<Integer, Integer> diffCount = new HashMap<>();
+        diffCount.put(0, 1);  
+        int count = 0;
+
+        for (int i = 1; i <= n; i++) {
+            int diff = vowelPrefix[i] - consonantPrefix[i];
+            count += diffCount.getOrDefault(diff, 0);
+            diffCount.put(diff, diffCount.getOrDefault(diff, 0) + 1);
+        }
+
+        return count;
+    }
+
+    private boolean isVowel(char ch) {
+        return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u';
+    }
+}
