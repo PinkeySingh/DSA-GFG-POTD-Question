@@ -1,0 +1,35 @@
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+        // Code Here
+         int n = arr.length;
+        int[] mapped = new int[n];
+        
+        for (int i = 0; i < n; i++) {
+            mapped[i] = (arr[i] > k) ? 1 : -1;
+        }
+        
+        Map<Integer, Integer> prefixMap = new HashMap<>();
+        int sum = 0;
+        int maxLen = 0;
+        prefixMap.put(0, -1); 
+
+        for (int i = 0; i < n; i++) {
+            sum += mapped[i];
+
+            if (sum > 0) {
+                maxLen = i + 1;
+            } else {
+           
+                if (prefixMap.containsKey(sum - 1)) {
+                    maxLen = Math.max(maxLen, i - prefixMap.get(sum - 1));
+                }
+            }
+
+            if (!prefixMap.containsKey(sum)) {
+                prefixMap.put(sum, i);
+            }
+        }
+
+        return maxLen;
+    }
+}
