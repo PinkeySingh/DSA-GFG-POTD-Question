@@ -1,0 +1,30 @@
+class Solution {
+    public int minSoldiers(int[] arr, int k) {
+        // code here
+         int n = arr.length;
+        int luckyCount = 0;
+        List<Integer> costs = new ArrayList<>();
+
+        for (int soldiers : arr) {
+            if (soldiers % k == 0) {
+                luckyCount++;
+            } else {
+                costs.add(k - (soldiers % k));
+            }
+        }
+
+        int required = (n + 1) / 2; 
+        if (luckyCount >= required) {
+            return 0;
+        }
+
+        Collections.sort(costs);
+
+        int soldiersAdded = 0;
+        for (int i = 0; i < required - luckyCount; i++) {
+            soldiersAdded += costs.get(i);
+        }
+
+        return soldiersAdded;
+    }
+}
